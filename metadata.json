@@ -1,0 +1,6 @@
+{
+  "name": "Pawsitive Pillow",
+  "description": "Custom Pet Cutout Pillows & Personalized Memorial Gifts celebrating the bond between pets and their humans.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
