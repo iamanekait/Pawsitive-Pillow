@@ -52,8 +52,8 @@ export const Navbar: React.FC<NavbarProps> = ({
     } else if (tabId === 'blog') {
       const el = document.getElementById('blog-section');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
-    } else if (tabId === 'about') {
-      const el = document.getElementById('about-section') || document.getElementById('about');
+    } else if (tabId === 'about' || tabId === 'about-us') {
+      const el = document.getElementById('about-us-section') || document.getElementById('about-section') || document.getElementById('about');
       if (el) el.scrollIntoView({ behavior: 'smooth' });
     } else {
       const el = document.getElementById(tabId) || document.getElementById(`${tabId}-section`);

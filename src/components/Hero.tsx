@@ -41,16 +41,24 @@ export const Hero: React.FC<HeroProps> = ({
 
   return (
     <section className="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 min-h-[550px] flex items-center justify-center">
-      {/* Background Picture behind the hero text */}
+      {/* Background Video / Picture behind the hero text */}
       <div className="absolute inset-0 z-0">
-        <img
-          src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=2000&q=80"
-          alt="Happy Pets Background"
-          className="w-full h-full object-cover object-center brightness-90"
-          referrerPolicy="no-referrer"
-        />
-        {/* Dark/Warm Gradient Overlay for contrast and readability */}
-        <div className="absolute inset-0 bg-gradient-to-b from-[#2A1E1C]/80 via-[#3D2E2B]/75 to-[#2A1E1C]/85 backdrop-blur-[2px]" />
+        <video
+          autoPlay
+          loop
+          muted
+          playsInline
+          className="w-full h-full object-cover object-center brightness-100"
+        >
+          <source src="https://rtd91ogeqfgmjtna.public.blob.vercel-storage.com/Pawsitive%20Pillow.mp4" type="video/mp4" />
+          <img
+            src="https://images.unsplash.com/photo-1548199973-03cce0bbc87b?auto=format&fit=crop&w=2000&q=80"
+            alt="Happy Pets Background"
+            className="w-full h-full object-cover object-center"
+          />
+        </video>
+        {/* Dark/Warm Gradient Overlay for contrast and readability - 15% lighter for higher video visibility */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#2A1E1C]/65 via-[#3D2E2B]/60 to-[#2A1E1C]/70 backdrop-blur-[1px]" />
       </div>
 
       <div className="relative z-10 max-w-4xl mx-auto">
