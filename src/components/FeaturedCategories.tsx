@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { ShoppingBag, Heart, Star, Sparkles, Filter } from 'lucide-react';
+import { motion } from 'motion/react';
 import { PRODUCTS } from '../data/mockData';
 import { CartItem, Currency } from '../types';
 import { formatPrice } from '../utils/currency';

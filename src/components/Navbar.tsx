@@ -1,6 +1,9 @@
-import React, { useState } from 'react';
-import { Heart, ShoppingBag, Search, Menu, X, Sparkles, MapPin, Truck, HelpCircle, PhoneCall } from 'lucide-react';
+import React, { useState, useEffect } from 'react';
+import { Heart, ShoppingBag, Search, Menu, X, Sparkles, MapPin, Truck, User as UserIcon, LogOut } from 'lucide-react';
 import { Currency } from '../types';
+import { auth, signInWithGoogle, logoutUser } from '../lib/firebase';
+import { onAuthStateChanged, User } from 'firebase/auth';
+import appLogo from '../assets/images/app_logo_1784776299619.jpg';
 
 interface NavbarProps {
   activeTab?: string;
@@ -14,6 +17,7 @@ interface NavbarProps {
   openTracker?: () => void;
   onOpenTracker?: () => void;
   onOpenCustomizer?: () => void;
+  onOpenAuth?: () => void;
 }
 
 export const Navbar: React.FC<NavbarProps> = ({
@@ -28,10 +32,20 @@ export const Navbar: React.FC<NavbarProps> = ({
   openTracker,
   onOpenTracker,
   onOpenCustomizer,
+  onOpenAuth,
 }) => {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false);
   const [searchOpen, setSearchOpen] = useState(false);
   const [searchQuery, setSearchQuery] = useState('');
+  const [user, setUser] = useState<User | null>(null);
+  const [userMenuOpen, setUserMenuOpen] = useState(false);
+
+  useEffect(() => {
+    const unsubscribe = onAuthStateChanged(auth, (currentUser) => {
+      setUser(currentUser);
+    });
+    return () => unsubscribe();
+  }, []);
 
   const handleTabClick = (tabId: string) => {
     if (setActiveTab) {
@@ -121,9 +135,14 @@ export const Navbar: React.FC<NavbarProps> = ({
         <div className="flex items-center justify-between h-20">
           
           {/* Logo */}
-          <div className="flex items-center space-x-3 cursor-pointer" onClick={() => handleTabClick('home')}>
-            <div className="w-11 h-11 rounded-2xl bg-gradient-to-tr from-[#5C4033] to-[#795548] flex items-center justify-center text-white plush-shadow transform hover:scale-105 transition-all">
-              <span className="font-rounded font-extrabold text-xl tracking-tight text-[#E5C158]">PP</span>
+          <div className="flex items-center space-x-3 cursor-pointer group" onClick={() => handleTabClick('home')}>
+            <div className="w-12 h-12 rounded-2xl overflow-hidden bg-white p-0.5 border border-[#E5D7C6] plush-shadow transform group-hover:scale-105 transition-all">
+              <img
+                src={appLogo}
+                alt="Pawsitive Pillow Logo"
+                className="w-full h-full object-cover rounded-xl"
+                referrerPolicy="no-referrer"
+              />
             </div>
             <div>
               <div className="flex items-center space-x-1.5">
@@ -191,6 +210,81 @@ export const Navbar: React.FC<NavbarProps> = ({
                   </span>
                 )}
               </button>
+            </div>
+
+            {/* Firebase Auth Profile Button */}
+            <div className="relative">
+              {user ? (
+                <div>
+                  <button
+                    onClick={() => setUserMenuOpen(!userMenuOpen)}
+                    className="flex items-center space-x-2 p-1.5 pr-3 rounded-2xl hover:bg-[#F5EFE6] text-[#5C4033] transition-all border border-[#E5D7C6]"
+                  >
+                    {user.photoURL ? (
+                      <img src={user.photoURL} alt={user.displayName || 'User'} className="w-7 h-7 rounded-full object-cover" />
+                    ) : (
+                      <div className="w-7 h-7 rounded-full bg-[#5C4033] text-white flex items-center justify-center font-bold text-xs">
+                        {user.displayName ? user.displayName.charAt(0).toUpperCase() : 'U'}
+                      </div>
+                    )}
+                    <span className="hidden sm:inline font-bold text-xs max-w-[90px] truncate">{user.displayName || 'Profile'}</span>
+                  </button>
+
+                  {userMenuOpen && (
+                    <div className="absolute right-0 mt-2 w-56 bg-white rounded-2xl shadow-xl border border-[#E5D7C6] p-3 z-50 animate-fadeIn space-y-2">
+                      <div className="border-b border-gray-100 pb-2">
+                        <p className="font-bold text-xs text-[#3D2E2B] truncate">{user.displayName || 'Pet Parent'}</p>
+                        <p className="text-[11px] text-gray-500 truncate">{user.email}</p>
+                      </div>
+                      <button
+                        onClick={() => {
+                          setUserMenuOpen(false);
+                          if (onOpenAuth) onOpenAuth();
+                        }}
+                        className="w-full text-left px-2 py-1.5 rounded-xl hover:bg-[#FDFBF7] text-xs font-semibold text-[#5C4033] flex items-center space-x-2"
+                      >
+                        <UserIcon className="w-4 h-4 text-[#C86D51]" />
+                        <span>Profile & Account</span>
+                      </button>
+                      <button
+                        onClick={() => {
+                          handleOpenTracker();
+                          setUserMenuOpen(false);
+                        }}
+                        className="w-full text-left px-2 py-1.5 rounded-xl hover:bg-[#FDFBF7] text-xs font-semibold text-[#5C4033] flex items-center space-x-2"
+                      >
+                        <Truck className="w-4 h-4 text-[#87A96B]" />
+                        <span>My Saved Orders</span>
+                      </button>
+                      <button
+                        onClick={async () => {
+                          await logoutUser();
+                          setUserMenuOpen(false);
+                        }}
+                        className="w-full text-left px-2 py-1.5 rounded-xl hover:bg-red-50 text-xs font-semibold text-red-600 flex items-center space-x-2"
+                      >
+                        <LogOut className="w-4 h-4" />
+                        <span>Sign Out</span>
+                      </button>
+                    </div>
+                  )}
+                </div>
+              ) : (
+                <button
+                  onClick={() => {
+                    if (onOpenAuth) {
+                      onOpenAuth();
+                    } else {
+                      signInWithGoogle();
+                    }
+                  }}
+                  className="flex items-center space-x-1.5 px-3 py-2 rounded-2xl bg-[#F5EFE6] hover:bg-[#E5D7C6] text-[#5C4033] font-bold text-xs transition-all border border-[#E5D7C6]"
+                  title="Profile & Sign In"
+                >
+                  <UserIcon className="w-4 h-4 text-[#C86D51]" />
+                  <span className="hidden sm:inline">Profile</span>
+                </button>
+              )}
             </div>
 
             {/* Cart Button */}

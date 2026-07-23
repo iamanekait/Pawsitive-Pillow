@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 import { Heart, Mail, MapPin, Send, Check } from 'lucide-react';
+import appLogo from '../assets/images/app_logo_1784776299619.jpg';
 
 interface FooterProps {
   onOpenCustomizer: () => void;
@@ -44,8 +45,13 @@ export const Footer: React.FC<FooterProps> = ({ onOpenCustomizer, onOpenTracker 
           
           <div className="lg:col-span-6 space-y-4">
             <div className="flex items-center space-x-3">
-              <div className="w-10 h-10 rounded-2xl bg-[#5C4033] border border-[#E5C158]/50 flex items-center justify-center text-[#E5C158] plush-shadow">
-                <Heart className="w-5 h-5 fill-current" />
+              <div className="w-11 h-11 rounded-2xl overflow-hidden bg-white p-0.5 border border-[#E5C158]/50 plush-shadow">
+                <img
+                  src={appLogo}
+                  alt="Pawsitive Pillow Logo"
+                  className="w-full h-full object-cover rounded-xl"
+                  referrerPolicy="no-referrer"
+                />
               </div>
               <span className="font-rounded font-extrabold text-2xl tracking-tight text-[#FDFBF7]">
                 Pawsitive Pillow

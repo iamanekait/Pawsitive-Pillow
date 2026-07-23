@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import { X, Trash2, ShoppingBag, ArrowRight, Tag, Gift, Check, ShieldCheck, Heart } from 'lucide-react';
 import { CartItem, Currency } from '../types';
 import { formatPrice } from '../utils/currency';
+import { db, auth } from '../lib/firebase';
+import { collection, addDoc } from 'firebase/firestore';
 
 interface CartDrawerProps {
   isOpen: boolean;
@@ -57,9 +59,32 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
     }
   };
 
-  const handlePlaceOrder = (e: React.FormEvent) => {
+  const handlePlaceOrder = async (e: React.FormEvent) => {
     e.preventDefault();
     setOrderComplete(true);
+
+    try {
+      await addDoc(collection(db, 'orders'), {
+        userId: auth.currentUser?.uid || 'guest',
+        customerName: customerName || 'Guest Pet Lover',
+        customerEmail: customerEmail || auth.currentUser?.email || 'guest@example.com',
+        shippingAddress: `${address}, ${city}`,
+        items: cartItems.map((item) => ({
+          title: item.title,
+          price: item.price,
+          quantity: item.quantity,
+          size: item.size || '16-inch',
+          customPetName: item.customPetName || '',
+        })),
+        total: total,
+        currency: currency,
+        status: 'Handcrafting in Durgapur',
+        createdAt: new Date().toISOString(),
+      });
+    } catch (err) {
+      console.warn('Could not persist order to Firestore:', err);
+    }
+
     setTimeout(() => {
       onClearCart();
     }, 2000);

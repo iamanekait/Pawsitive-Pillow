@@ -12,6 +12,7 @@ import { BlogSection } from './components/BlogSection';
 import { FaqSection } from './components/FaqSection';
 import { CartDrawer } from './components/CartDrawer';
 import { OrderTrackerModal } from './components/OrderTrackerModal';
+import { AuthModal } from './components/AuthModal';
 import { AiChatbot } from './components/AiChatbot';
 import { ScrollToTop } from './components/ScrollToTop';
 import { Footer } from './components/Footer';
@@ -24,6 +25,7 @@ export default function App() {
   const [cartItems, setCartItems] = useState<CartItem[]>([]);
   const [isCartOpen, setIsCartOpen] = useState(false);
   const [isTrackerOpen, setIsTrackerOpen] = useState(false);
+  const [isAuthOpen, setIsAuthOpen] = useState(false);
 
   const handleAddToCart = (item: Omit<CartItem, 'id'>) => {
     const newItem: CartItem = {
@@ -83,6 +85,7 @@ export default function App() {
         onOpenCart={() => setIsCartOpen(true)}
         onOpenTracker={() => setIsTrackerOpen(true)}
         onOpenCustomizer={scrollToCustomizer}
+        onOpenAuth={() => setIsAuthOpen(true)}
       />
 
       {/* Main Content Sections */}
@@ -157,6 +160,13 @@ export default function App() {
       <OrderTrackerModal
         isOpen={isTrackerOpen}
         onClose={() => setIsTrackerOpen(false)}
+      />
+
+      {/* Firebase Auth Modal */}
+      <AuthModal
+        isOpen={isAuthOpen}
+        onClose={() => setIsAuthOpen(false)}
+        onOpenTracker={() => setIsTrackerOpen(true)}
       />
 
       {/* Floating AI Chatbot (Gemini Server API Integration) */}

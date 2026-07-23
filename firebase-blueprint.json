@@ -1,0 +1,65 @@
+{
+  "entities": {
+    "Order": {
+      "title": "Order",
+      "description": "Customer order details",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "items": { "type": "array" },
+        "total": { "type": "number" },
+        "currency": { "type": "string" },
+        "status": { "type": "string" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "items", "total", "status", "createdAt"]
+    },
+    "MemorialCandle": {
+      "title": "MemorialCandle",
+      "description": "Digital memorial candle tribute for pets",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "petName": { "type": "string", "maxLength": 100 },
+        "message": { "type": "string", "maxLength": 500 },
+        "authorName": { "type": "string", "maxLength": 100 },
+        "authorId": { "type": "string" },
+        "candlesLit": { "type": "number" },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "petName", "message", "authorName", "createdAt"]
+    },
+    "CustomDesign": {
+      "title": "CustomDesign",
+      "description": "Saved pet pillow customization design",
+      "type": "object",
+      "properties": {
+        "id": { "type": "string" },
+        "userId": { "type": "string" },
+        "petName": { "type": "string", "maxLength": 100 },
+        "photoUrl": { "type": "string" },
+        "size": { "type": "string" },
+        "fabric": { "type": "string" },
+        "fill": { "type": "string" },
+        "specialInstructions": { "type": "string", "maxLength": 500 },
+        "createdAt": { "type": "string" }
+      },
+      "required": ["id", "userId", "petName", "photoUrl", "size", "createdAt"]
+    }
+  },
+  "firestore": {
+    "/orders/{orderId}": {
+      "schema": { "$ref": "#/entities/Order" },
+      "description": "User order records"
+    },
+    "/memorialCandles/{candleId}": {
+      "schema": { "$ref": "#/entities/MemorialCandle" },
+      "description": "Memorial candle tributes"
+    },
+    "/customDesigns/{designId}": {
+      "schema": { "$ref": "#/entities/CustomDesign" },
+      "description": "Saved pillow customization drafts"
+    }
+  }
+}

@@ -1,8 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import { Heart, Sparkles, Flame, Plus, ShieldCheck, Star, MessageSquare } from 'lucide-react';
 import { PRODUCTS, MEMORIAL_STORIES, INITIAL_CANDLES } from '../data/mockData';
 import { CandleTribute, CartItem, Currency } from '../types';
 import { formatPrice } from '../utils/currency';
+import { db, auth, handleFirestoreError, OperationType } from '../lib/firebase';
+import { collection, onSnapshot, addDoc, query, orderBy, limit } from 'firebase/firestore';
 
 interface MemorialSectionProps {
   onAddToCart: (item: Omit<CartItem, 'id'>) => void;
@@ -24,19 +26,67 @@ export const MemorialSection: React.FC<MemorialSectionProps> = ({
 
   const memorialProducts = PRODUCTS.filter((p) => p.isMemorial || p.category === 'memorial');
 
-  const handleLightCandle = (e: React.FormEvent) => {
+  // Real-time Firestore sync for memorial candles
+  useEffect(() => {
+    const candlesPath = 'memorialCandles';
+    const candlesQuery = query(collection(db, candlesPath), orderBy('createdAt', 'desc'), limit(50));
+
+    const unsubscribe = onSnapshot(
+      candlesQuery,
+      (snapshot) => {
+        if (!snapshot.empty) {
+          const loadedCandles: CandleTribute[] = snapshot.docs.map((docSnap) => {
+            const data = docSnap.data();
+            return {
+              id: docSnap.id,
+              petName: data.petName || 'Beloved Pet',
+              message: data.message || '',
+              sender: data.authorName || 'A Loving Pet Parent',
+              litAt: 'Recently',
+            };
+          });
+          setCandles(loadedCandles);
+        }
+      },
+      (error) => {
+        handleFirestoreError(error, OperationType.GET, candlesPath);
+      }
+    );
+
+    return () => unsubscribe();
+  }, []);
+
+  const handleLightCandle = async (e: React.FormEvent) => {
     e.preventDefault();
     if (!newPetName || !newMessage) return;
+
+    const candleSender = newSender || auth.currentUser?.displayName || 'A Loving Pet Parent';
 
     const newCandle: CandleTribute = {
       id: `cand-${Date.now()}`,
       petName: newPetName,
       message: newMessage,
-      sender: newSender || 'A Loving Pet Parent',
+      sender: candleSender,
       litAt: 'Just now',
     };
 
+    // Optimistic local update
     setCandles([newCandle, ...candles]);
+
+    // Save to Firestore
+    try {
+      await addDoc(collection(db, 'memorialCandles'), {
+        petName: newPetName,
+        message: newMessage,
+        authorName: candleSender,
+        authorId: auth.currentUser?.uid || 'anonymous',
+        candlesLit: 1,
+        createdAt: new Date().toISOString(),
+      });
+    } catch (error) {
+      console.warn('Could not persist candle to Firestore:', error);
+    }
+
     setNewPetName('');
     setNewMessage('');
     setNewSender('');
