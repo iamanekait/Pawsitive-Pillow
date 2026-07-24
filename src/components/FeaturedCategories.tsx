@@ -33,7 +33,7 @@ export const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({
     : PRODUCTS.filter((p) => p.category === activeCategory || (activeCategory === 'memorial' && p.isMemorial));
 
   return (
-    <section id="shop-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDFBF7]">
+    <section id="shop-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDFBF7] scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}
@@ -83,8 +83,10 @@ export const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({
         {/* Products Grid */}
         <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-6">
           {filteredProducts.map((product) => (
-            <div
+            <motion.div
               key={product.id}
+              whileHover={{ y: -6, scale: 1.015 }}
+              transition={{ duration: 0.25, ease: 'easeOut' }}
               className="bg-white rounded-3xl border border-[#E5D7C6] p-4 plush-shadow hover:shadow-xl transition-all flex flex-col justify-between space-y-4 group"
             >
               {/* Product Image */}
@@ -155,7 +157,7 @@ export const FeaturedCategories: React.FC<FeaturedCategoriesProps> = ({
                 <ShoppingBag className="w-3.5 h-3.5" />
                 <span>{product.id === 'prod-cutout-pillow' ? 'Customize Cutout Pillow' : 'Add to Cart'}</span>
               </button>
-            </div>
+            </motion.div>
           ))}
         </div>
 

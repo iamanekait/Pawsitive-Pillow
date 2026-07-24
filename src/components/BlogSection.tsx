@@ -7,7 +7,7 @@ export const BlogSection: React.FC = () => {
   const [selectedPost, setSelectedPost] = useState<BlogPost | null>(null);
 
   return (
-    <section id="blog-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/30">
+    <section id="blog-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/30 scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}

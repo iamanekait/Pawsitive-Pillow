@@ -56,15 +56,15 @@ export const AiChatbot: React.FC = () => {
   };
 
   return (
-    <div className="fixed bottom-6 right-6 z-50">
+    <div className="fixed bottom-4 right-4 sm:bottom-6 sm:right-6 z-50">
       {/* Floating Toggle Button */}
       {!isOpen && (
         <button
           onClick={() => setIsOpen(true)}
-          className="bg-[#5C4033] hover:bg-[#3D2E2B] text-white p-4 rounded-full plush-shadow-lg transition-all transform hover:scale-110 active:scale-95 flex items-center space-x-2 border-2 border-[#E5C158]"
+          className="bg-[#5C4033] hover:bg-[#3D2E2B] text-white p-3.5 sm:p-4 rounded-full plush-shadow-lg transition-all transform hover:scale-110 active:scale-95 flex items-center space-x-2 border-2 border-[#E5C158]"
           title="Chat with Pawsitive Assistant"
         >
-          <Bot className="w-6 h-6 text-[#E5C158]" />
+          <Bot className="w-5 h-5 sm:w-6 sm:h-6 text-[#E5C158]" />
           <span className="hidden sm:inline text-xs font-bold pr-1">Pawsitive AI</span>
           <span className="w-3 h-3 bg-[#87A96B] rounded-full animate-ping absolute top-0 right-0 border-2 border-white" />
         </button>
@@ -72,7 +72,7 @@ export const AiChatbot: React.FC = () => {
 
       {/* Chat Window */}
       {isOpen && (
-        <div className="bg-[#FDFBF7] w-[340px] sm:w-[380px] h-[480px] rounded-3xl border-2 border-[#E5D7C6] plush-shadow-lg flex flex-col justify-between overflow-hidden shadow-2xl">
+        <div className="bg-[#FDFBF7] w-[calc(100vw-32px)] max-w-[380px] sm:w-[380px] h-[450px] sm:h-[480px] rounded-3xl border-2 border-[#E5D7C6] plush-shadow-lg flex flex-col justify-between overflow-hidden shadow-2xl">
           
           {/* Header */}
           <div className="bg-[#5C4033] text-white p-4 flex items-center justify-between">

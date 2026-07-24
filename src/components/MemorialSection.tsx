@@ -98,7 +98,7 @@ export const MemorialSection: React.FC<MemorialSectionProps> = ({
   };
 
   return (
-    <section id="memorial-section" className="py-16 lg:py-24 bg-gradient-to-b from-[#F4EFEA] via-[#EFE6DC] to-[#F8F4EE] px-4 sm:px-6 lg:px-8 border-y border-[#E5D7C6]">
+    <section id="memorial-section" className="py-16 lg:py-24 bg-gradient-to-b from-[#F4EFEA] via-[#EFE6DC] to-[#F8F4EE] px-4 sm:px-6 lg:px-8 border-y border-[#E5D7C6] scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-16">
         
         {/* Banner Card */}

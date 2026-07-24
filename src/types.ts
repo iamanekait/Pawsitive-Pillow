@@ -23,7 +23,7 @@ export interface CustomizerState {
   backgroundRemoved: boolean;
   selectedFont: string;
   fontColor: string;
-  size: '12-inch' | '16-inch' | '20-inch' | '24-inch';
+  size: '10″×10″' | '16″×16″' | '22″×22″';
   material: 'ultra-velvet' | 'organic-cotton' | 'faux-suede';
   backingPattern: 'beige-solid' | 'paw-prints' | 'floral' | 'rainbow-bridge';
   isMemorialOrder: boolean;

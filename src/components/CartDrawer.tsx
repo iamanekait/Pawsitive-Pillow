@@ -73,7 +73,7 @@ export const CartDrawer: React.FC<CartDrawerProps> = ({
           title: item.title,
           price: item.price,
           quantity: item.quantity,
-          size: item.size || '16-inch',
+          size: item.size || '16″×16″',
           customPetName: item.customPetName || '',
         })),
         total: total,

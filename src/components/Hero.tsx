@@ -40,7 +40,7 @@ export const Hero: React.FC<HeroProps> = ({
   };
 
   return (
-    <section className="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 min-h-[550px] flex items-center justify-center">
+    <section id="home-section" className="relative overflow-hidden py-16 lg:py-24 px-4 sm:px-6 lg:px-8 min-h-[500px] sm:min-h-[550px] flex items-center justify-center scroll-mt-16 sm:scroll-mt-20">
       {/* Background Video / Picture behind the hero text */}
       <div className="absolute inset-0 z-0">
         <video

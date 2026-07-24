@@ -37,7 +37,7 @@ export const FaqSection: React.FC = () => {
   );
 
   return (
-    <section id="faq-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/40">
+    <section id="faq-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/40 scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-4xl mx-auto space-y-8">
         
         {/* Header */}

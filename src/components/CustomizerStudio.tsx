@@ -51,7 +51,7 @@ export const CustomizerStudio: React.FC<CustomizerStudioProps> = ({
     backgroundRemoved: true,
     selectedFont: 'font-rounded',
     fontColor: '#5C4033',
-    size: '16-inch',
+    size: '16″×16″',
     material: 'ultra-velvet',
     backingPattern: 'paw-prints',
     isMemorialOrder: false,
@@ -64,11 +64,10 @@ export const CustomizerStudio: React.FC<CustomizerStudioProps> = ({
   const [successMsg, setSuccessMsg] = useState('');
 
   // Price Calculation
-  const basePrices = {
-    '12-inch': 29.99,
-    '16-inch': 39.99,
-    '20-inch': 49.99,
-    '24-inch': 64.99,
+  const basePrices: Record<string, number> = {
+    '10″×10″': 29.99,
+    '16″×16″': 39.99,
+    '22″×22″': 54.99,
   };
 
   const unitPrice = basePrices[state.size] + (state.includeGiftBox ? 4.99 : 0);
@@ -111,7 +110,7 @@ export const CustomizerStudio: React.FC<CustomizerStudioProps> = ({
   };
 
   return (
-    <section id="customizer-section" className="py-12 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/60">
+    <section id="customizer-section" className="py-12 lg:py-20 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/60 scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-8">
         
         {/* Section Header */}
@@ -132,7 +131,7 @@ export const CustomizerStudio: React.FC<CustomizerStudioProps> = ({
         <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 items-start">
           
           {/* Left Column: Live Canvas Preview Studio */}
-          <div className="lg:col-span-6 space-y-4 sticky top-24">
+          <div className="lg:col-span-6 space-y-4 lg:sticky lg:top-24 z-10">
             <div className="relative w-full h-[450px] sm:h-[520px] rounded-3xl bg-white plush-shadow border-2 border-[#E5D7C6] overflow-hidden flex items-center justify-center p-6">
               
               {/* Backing Pattern Background simulation */}
@@ -330,12 +329,11 @@ export const CustomizerStudio: React.FC<CustomizerStudioProps> = ({
                 Step 3: Select Pillow Size
               </label>
 
-              <div className="grid grid-cols-2 sm:grid-cols-4 gap-2">
+              <div className="grid grid-cols-1 sm:grid-cols-3 gap-2">
                 {[
-                  { id: '12-inch', name: '12 Inch (Mini)', price: formatPrice(29.99, currency) },
-                  { id: '16-inch', name: '16 Inch (Most Popular)', price: formatPrice(39.99, currency), isPopular: true },
-                  { id: '20-inch', name: '20 Inch (Hug Size)', price: formatPrice(49.99, currency) },
-                  { id: '24-inch', name: '24 Inch (Life Size)', price: formatPrice(64.99, currency) },
+                  { id: '10″×10″', name: '10″×10″ (Compact)', price: formatPrice(29.99, currency) },
+                  { id: '16″×16″', name: '16″×16″ (Most Popular)', price: formatPrice(39.99, currency), isPopular: true },
+                  { id: '22″×22″', name: '22″×22″ (Giant Hug Size)', price: formatPrice(54.99, currency) },
                 ].map((sizeOpt) => (
                   <button
                     key={sizeOpt.id}

@@ -36,7 +36,7 @@ export const GallerySection: React.FC = () => {
   ];
 
   return (
-    <section className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDFBF7]">
+    <section id="gallery-section" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#FDFBF7] scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}

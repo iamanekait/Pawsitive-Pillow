@@ -38,7 +38,7 @@ export const HowItWorks: React.FC<HowItWorksProps> = ({ onStartCustomizer }) => 
   ];
 
   return (
-    <section className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/50">
+    <section id="how-it-works" className="py-16 lg:py-24 px-4 sm:px-6 lg:px-8 bg-[#F5EFE6]/50 scroll-mt-16 sm:scroll-mt-20 overflow-hidden relative">
       <div className="max-w-7xl mx-auto space-y-12">
         
         {/* Header */}
